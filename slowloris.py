@@ -42,7 +42,7 @@ parser.add_argument(
     help="Use a SOCKS5 proxy for connecting",
 )
 parser.add_argument(
-    "--proxy-host", default="127.0.0.1", help="SOCKS5 proxy host"
+    "--proxy-host", default="192.168.1.1", help="SOCKS5 proxy host"
 )
 parser.add_argument(
     "--proxy-port", default="8080", help="SOCKS5 proxy port", type=int
@@ -159,7 +159,7 @@ def init_socket(ip: str):
 
     s.connect((ip, args.port))
 
-    s.send_line(f"GET /?{random.randint(0, 2000)} HTTP/1.1")
+    s.send_line(f"GET /?{random.randint(0, 9999)} HTTP/1.1")
 
     ua = user_agents[0]
     if args.randuseragent:
@@ -177,7 +177,7 @@ def slowloris_iteration():
     # Try to send a header line to each socket
     for s in list(list_of_sockets):
         try:
-            s.send_header("X-a", random.randint(1, 5000))
+            s.send_header("X-a", random.randint(1, 9999))
         except socket.error:
             list_of_sockets.remove(s)
 
